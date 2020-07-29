@@ -122,7 +122,7 @@ class fileLoader:
     # get kalpha2
     def getKalpha2(self):
         soup = self.BS
-        return soup.kalpha2.string
+        return float(soup.kalpha2.string)
 
     # create dictionary of 2Theta and intensity values
     def createDict(self):
