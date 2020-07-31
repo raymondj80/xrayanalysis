@@ -6,13 +6,13 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.errors import HttpError
 from google.auth.transport.requests import Request
 from apiclient.http import MediaFileUpload, MediaIoBaseDownload
-import googleAPI_auth
+import googleDriveAPI_auth
 from bs4 import BeautifulSoup
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/drive']
 
-authInst = googleAPI_auth.auth(SCOPES)
+authInst = googleDriveAPI_auth.auth(SCOPES)
 creds = authInst.get_credentials()
 drive_service = build('drive', 'v3', credentials=creds)
 
@@ -92,8 +92,7 @@ class fileLoader:
 
     # converts xrdml file into BeautifulSoup object
     def convertToBS(self):
-        if not os.path.exists('xrdml_files'):
-            os.makedirs('xrdml_files')
+        self.makeFolder('xrdml_files')
         self.downloadFile(self.findFile())
         with open('xrdml_files/%s' %self.FILE,'r') as file:
             file_input = file.read()
@@ -136,5 +135,10 @@ class fileLoader:
             d[tth] = i
             tth = tth + incr
         return d
+
+    # create folder
+    def makeFolder(self,foldername):
+        if not os.path.exists(foldername):
+            os.makedirs(foldername)
 
 

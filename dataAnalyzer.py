@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 import numpy as np
 import math
 from scipy.signal import argrelextrema
@@ -10,6 +9,7 @@ class Analyzer:
         self.FILM = data_film
         self.SUBSTRATE = data_substrate
         self.KALPHA2 = kAlpha2
+        self.FIT = None
 
     #Return a numpy array gaussian distribution.
     def gaussianFunc(self,x,x0,sigma):
@@ -54,8 +54,9 @@ class Analyzer:
         return [x0,yp,sigma,b]
 
     # Curve fits data to a gaussian function within the min_x and max_x params
-    def regressionFit(self,theta0,y,eta,epsilon,min_x,max_x):
+    def regressionFit(self,theta0,eta,epsilon,min_x,max_x):
         x = np.array(list(self.FILM.keys()))
+        y = self.pseudoVoigt(self.FILM,0.05,2.7,1) - self.pseudoVoigt(self.SUBSTRATE,0.05,2.7,1)  # subtract smoothed film data from smoothed substrate data
         [x0,yp,sigma,b] = theta0
         prev_J = 0.0
         counts = 0
@@ -129,10 +130,15 @@ class Analyzer:
             prev_J = J
             counts = counts + 1
 
+        self.FIT = dict(zip(x, (yp/ (sigma * np.sqrt(2*np.pi))) * self.gaussianFunc(x,x0,sigma) + b + self.pseudoVoigt(self.SUBSTRATE,0.05,2.7,1)))  
         return [x0,yp,sigma,b]
+    
+        
 
     def braggsLaw(self,n,theta,lbda):
         d = (n * lbda) / (2 * math.sin(math.radians(theta)))
         return '{:.3f}'.format(d)
+
+
 
     
