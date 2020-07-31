@@ -16,7 +16,6 @@ Formatter = dataFormatter.Formatter()
 Data = dataAnalyzer.Analyzer(tth_thin_film.createDict(),tth_substrate.createDict(),tth_thin_film.getKalpha2())
 RAW_DATA = Data.FILM
 
-
 # Analyze Data
 Formatter.plotSemilogy(list(RAW_DATA.keys()),list(RAW_DATA.values()),20,60)
 plt.show()
