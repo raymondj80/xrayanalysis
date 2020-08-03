@@ -23,7 +23,8 @@ X_MIN = float(input("Enter Minimum X: "))
 X_MAX = float(input("Enter Maximum X: "))
 tth0 = Data.initializeTheta(Data.FILM,1,10)
 tth_fit = Data.regressionFit(tth0,5e-5,0.01,X_MIN,X_MAX)
-# dist = Data.braggsLaw(1,tth_fit[0],Data.KALPHA2)
+dist = Data.braggsLaw(1,tth_fit[0],Data.KALPHA2)
+print(dist)
 
 # Plot Data
 d = Formatter.jupyterFormatter(Data.FILM,Data.FIT)

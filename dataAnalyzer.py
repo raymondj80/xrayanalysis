@@ -53,6 +53,15 @@ class Analyzer:
         b = 0
         return [x0,yp,sigma,b]
 
+    # Align substrate to film
+    # Take the peak values of the thin film peak, and shift the SUBSTRATE.values() over by set amt.
+    def alignSubstrate(self):
+        # Find the peak values of self.FILM, self.SUBSTRATE
+
+        # Scale self.SUBSTRATE to match self.FILM
+
+        # Shift self.SUBSTRATE.keys() by set amount
+
     # Curve fits data to a gaussian function within the min_x and max_x params
     def regressionFit(self,theta0,eta,epsilon,min_x,max_x):
         x = np.array(list(self.FILM.keys()))
@@ -136,7 +145,7 @@ class Analyzer:
         
 
     def braggsLaw(self,n,theta,lbda):
-        d = (n * lbda) / (2 * math.sin(math.radians(theta)))
+        d = (n * lbda) / (2 * math.sin(math.radians(theta / 2)))
         return '{:.3f}'.format(d)
 
 
